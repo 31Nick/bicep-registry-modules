@@ -24,14 +24,17 @@ The following section provides usage examples for the module, which were used to
 
 >**Note**: To reference the module, please use the following syntax `br/public:avm/ptn/authorization/policy-exemption:<version>`.
 
-- [Mg.Defaults](#example-1-mgdefaults)
-- [Mg.Max](#example-2-mgmax)
-- [Rg.Defaults](#example-3-rgdefaults)
-- [Rg.Max](#example-4-rgmax)
-- [Sub.Defaults](#example-5-subdefaults)
-- [Sub.Max](#example-6-submax)
+- [Policy Exemptions (Management Group scope)](#example-1-policy-exemptions-management-group-scope)
+- [Policy Exemptions (Management Group scope)](#example-2-policy-exemptions-management-group-scope)
+- [Policy Exemption (Resource Group)](#example-3-policy-exemption-resource-group)
+- [Policy Exemption (Resource Group)](#example-4-policy-exemption-resource-group)
+- [Policy Exemption (Subscription)](#example-5-policy-exemption-subscription)
+- [Policy Exemption (Subscription)](#example-6-policy-exemption-subscription)
 
-### Example 1: _Mg.Defaults_
+### Example 1: _Policy Exemptions (Management Group scope)_
+
+This module deploys a Policy Exemption at a Management Group scope using minimal parameters.
+
 
 <details>
 
@@ -42,11 +45,9 @@ module policyExemption 'br/public:avm/ptn/authorization/policy-exemption:<versio
   name: 'policyExemptionDeployment'
   params: {
     // Required parameters
-    assignmentScopeValidation: 'Default'
     exemptionCategory: 'Mitigated'
-    expiresOn: '2023-10-05T14:48:00Z'
     name: 'apemgmin001'
-    policyAssignmentId: 'test'
+    policyAssignmentId: '<policyAssignmentId>'
   }
 }
 ```
@@ -64,20 +65,14 @@ module policyExemption 'br/public:avm/ptn/authorization/policy-exemption:<versio
   "contentVersion": "1.0.0.0",
   "parameters": {
     // Required parameters
-    "assignmentScopeValidation": {
-      "value": "Default"
-    },
     "exemptionCategory": {
       "value": "Mitigated"
-    },
-    "expiresOn": {
-      "value": "2023-10-05T14:48:00Z"
     },
     "name": {
       "value": "apemgmin001"
     },
     "policyAssignmentId": {
-      "value": "test"
+      "value": "<policyAssignmentId>"
     }
   }
 }
@@ -94,17 +89,18 @@ module policyExemption 'br/public:avm/ptn/authorization/policy-exemption:<versio
 using 'br/public:avm/ptn/authorization/policy-exemption:<version>'
 
 // Required parameters
-param assignmentScopeValidation = 'Default'
 param exemptionCategory = 'Mitigated'
-param expiresOn = '2023-10-05T14:48:00Z'
 param name = 'apemgmin001'
-param policyAssignmentId = 'test'
+param policyAssignmentId = '<policyAssignmentId>'
 ```
 
 </details>
 <p>
 
-### Example 2: _Mg.Max_
+### Example 2: _Policy Exemptions (Management Group scope)_
+
+This module deploys a Policy Exemption at a Management Group scope using common parameters.
+
 
 <details>
 
@@ -115,51 +111,21 @@ module policyExemption 'br/public:avm/ptn/authorization/policy-exemption:<versio
   name: 'policyExemptionDeployment'
   params: {
     // Required parameters
+    exemptionCategory: 'Mitigated'
+    name: 'apemgmax001'
+    policyAssignmentId: '<policyAssignmentId>'
     // Non-required parameters
-    name: 'apamgmax001'
-    description: '[Description] Policy Assignment at the management group scope'
-    displayName: '[Display Name] Policy Assignment at the management group scope'
-    enforcementMode: 'DoNotEnforce'
-    identity: 'SystemAssigned'
+    assignmentScopeValidation: 'Default'
+    description: '[Description] Policy Exemption at the management group scope'
+    displayName: '[DisplayName] Policy Exemption at the management group scope'
+    enableTelemetry: true
+    expiresOn: '2024-11-14T20:46:13Z'
     location: '<location>'
-    managementGroupId: '<managementGroupId>'
+    managementGroupId: 'alz-landingzones'
     metadata: {
       assignedBy: 'Bicep'
       category: 'Security'
-      version: '1.0'
     }
-    nonComplianceMessages: [
-      {
-        message: 'Violated Policy Assignment - This is a Non Compliance Message'
-      }
-    ]
-    notScopes: [
-      '/subscriptions/<value>/resourceGroups/validation-rg'
-    ]
-    overrides: [
-      {
-        kind: 'policyEffect'
-        selectors: [
-          {
-            in: [
-              'ASC_DeployAzureDefenderForSqlAdvancedThreatProtectionWindowsAgent'
-              'ASC_DeployAzureDefenderForSqlVulnerabilityAssessmentWindowsAgent'
-            ]
-            kind: 'policyDefinitionReferenceId'
-          }
-        ]
-        value: 'Disabled'
-      }
-    ]
-    parameters: {
-      effect: {
-        value: 'Disabled'
-      }
-      enableCollectionOfSqlQueriesForSecurityResearch: {
-        value: false
-      }
-    }
-    policyDefinitionId: '/providers/Microsoft.Authorization/policySetDefinitions/39a366e6-fdde-4f41-bbf8-3757f46d1611'
     resourceSelectors: [
       {
         name: 'resourceSelector-test'
@@ -179,9 +145,6 @@ module policyExemption 'br/public:avm/ptn/authorization/policy-exemption:<versio
         ]
       }
     ]
-    roleDefinitionIds: [
-      '/providers/microsoft.authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c'
-    ]
   }
 }
 ```
@@ -199,76 +162,42 @@ module policyExemption 'br/public:avm/ptn/authorization/policy-exemption:<versio
   "contentVersion": "1.0.0.0",
   "parameters": {
     // Required parameters
+    "exemptionCategory": {
+      "value": "Mitigated"
+    },
     "name": {
-      "value": "apamgmax001"
+      "value": "apemgmax001"
+    },
+    "policyAssignmentId": {
+      "value": "<policyAssignmentId>"
     },
     // Non-required parameters
+    "assignmentScopeValidation": {
+      "value": "Default"
+    },
     "description": {
-      "value": "[Description] Policy Assignment at the management group scope"
+      "value": "[Description] Policy Exemption at the management group scope"
     },
     "displayName": {
-      "value": "[Display Name] Policy Assignment at the management group scope"
+      "value": "[DisplayName] Policy Exemption at the management group scope"
     },
-    "enforcementMode": {
-      "value": "DoNotEnforce"
+    "enableTelemetry": {
+      "value": true
     },
-    "identity": {
-      "value": "SystemAssigned"
+    "expiresOn": {
+      "value": "2024-11-14T20:46:13Z"
     },
     "location": {
       "value": "<location>"
     },
     "managementGroupId": {
-      "value": "<managementGroupId>"
+      "value": "alz-landingzones"
     },
     "metadata": {
       "value": {
         "assignedBy": "Bicep",
-        "category": "Security",
-        "version": "1.0"
+        "category": "Security"
       }
-    },
-    "nonComplianceMessages": {
-      "value": [
-        {
-          "message": "Violated Policy Assignment - This is a Non Compliance Message"
-        }
-      ]
-    },
-    "notScopes": {
-      "value": [
-        "/subscriptions/<value>/resourceGroups/validation-rg"
-      ]
-    },
-    "overrides": {
-      "value": [
-        {
-          "kind": "policyEffect",
-          "selectors": [
-            {
-              "in": [
-                "ASC_DeployAzureDefenderForSqlAdvancedThreatProtectionWindowsAgent",
-                "ASC_DeployAzureDefenderForSqlVulnerabilityAssessmentWindowsAgent"
-              ],
-              "kind": "policyDefinitionReferenceId"
-            }
-          ],
-          "value": "Disabled"
-        }
-      ]
-    },
-    "parameters": {
-      "value": {
-        "effect": {
-          "value": "Disabled"
-        },
-        "enableCollectionOfSqlQueriesForSecurityResearch": {
-          "value": false
-        }
-      }
-    },
-    "policyDefinitionId": {
-      "value": "/providers/Microsoft.Authorization/policySetDefinitions/39a366e6-fdde-4f41-bbf8-3757f46d1611"
     },
     "resourceSelectors": {
       "value": [
@@ -290,11 +219,6 @@ module policyExemption 'br/public:avm/ptn/authorization/policy-exemption:<versio
           ]
         }
       ]
-    },
-    "roleDefinitionIds": {
-      "value": [
-        "/providers/microsoft.authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
-      ]
     }
   }
 }
@@ -311,51 +235,21 @@ module policyExemption 'br/public:avm/ptn/authorization/policy-exemption:<versio
 using 'br/public:avm/ptn/authorization/policy-exemption:<version>'
 
 // Required parameters
+param exemptionCategory = 'Mitigated'
+param name = 'apemgmax001'
+param policyAssignmentId = '<policyAssignmentId>'
 // Non-required parameters
-param name = 'apamgmax001'
-param description = '[Description] Policy Assignment at the management group scope'
-param displayName = '[Display Name] Policy Assignment at the management group scope'
-param enforcementMode = 'DoNotEnforce'
-param identity = 'SystemAssigned'
+param assignmentScopeValidation = 'Default'
+param description = '[Description] Policy Exemption at the management group scope'
+param displayName = '[DisplayName] Policy Exemption at the management group scope'
+param enableTelemetry = true
+param expiresOn = '2024-11-14T20:46:13Z'
 param location = '<location>'
-param managementGroupId = '<managementGroupId>'
+param managementGroupId = 'alz-landingzones'
 param metadata = {
   assignedBy: 'Bicep'
   category: 'Security'
-  version: '1.0'
 }
-param nonComplianceMessages = [
-  {
-    message: 'Violated Policy Assignment - This is a Non Compliance Message'
-  }
-]
-param notScopes = [
-  '/subscriptions/<value>/resourceGroups/validation-rg'
-]
-param overrides = [
-  {
-    kind: 'policyEffect'
-    selectors: [
-      {
-        in: [
-          'ASC_DeployAzureDefenderForSqlAdvancedThreatProtectionWindowsAgent'
-          'ASC_DeployAzureDefenderForSqlVulnerabilityAssessmentWindowsAgent'
-        ]
-        kind: 'policyDefinitionReferenceId'
-      }
-    ]
-    value: 'Disabled'
-  }
-]
-param parameters = {
-  effect: {
-    value: 'Disabled'
-  }
-  enableCollectionOfSqlQueriesForSecurityResearch: {
-    value: false
-  }
-}
-param policyDefinitionId = '/providers/Microsoft.Authorization/policySetDefinitions/39a366e6-fdde-4f41-bbf8-3757f46d1611'
 param resourceSelectors = [
   {
     name: 'resourceSelector-test'
@@ -375,15 +269,15 @@ param resourceSelectors = [
     ]
   }
 ]
-param roleDefinitionIds = [
-  '/providers/microsoft.authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c'
-]
 ```
 
 </details>
 <p>
 
-### Example 3: _Rg.Defaults_
+### Example 3: _Policy Exemption (Resource Group)_
+
+This module deploys a Policy Exemption at a Resource Group scope using minimal parameters.
+
 
 <details>
 
@@ -394,13 +288,10 @@ module policyExemption 'br/public:avm/ptn/authorization/policy-exemption:<versio
   name: 'policyExemptionDeployment'
   params: {
     // Required parameters
+    exemptionCategory: 'Mitigated'
+    name: 'apergmin001'
+    policyAssignmentId: '<policyAssignmentId>'
     // Non-required parameters
-    name: 'apargmin001'
-    location: '<location>'
-    metadata: {
-      assignedBy: 'Bicep'
-    }
-    policyDefinitionId: '/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d'
     resourceGroupName: '<resourceGroupName>'
     subscriptionId: '<subscriptionId>'
   }
@@ -420,21 +311,16 @@ module policyExemption 'br/public:avm/ptn/authorization/policy-exemption:<versio
   "contentVersion": "1.0.0.0",
   "parameters": {
     // Required parameters
+    "exemptionCategory": {
+      "value": "Mitigated"
+    },
     "name": {
-      "value": "apargmin001"
+      "value": "apergmin001"
+    },
+    "policyAssignmentId": {
+      "value": "<policyAssignmentId>"
     },
     // Non-required parameters
-    "location": {
-      "value": "<location>"
-    },
-    "metadata": {
-      "value": {
-        "assignedBy": "Bicep"
-      }
-    },
-    "policyDefinitionId": {
-      "value": "/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d"
-    },
     "resourceGroupName": {
       "value": "<resourceGroupName>"
     },
@@ -456,13 +342,10 @@ module policyExemption 'br/public:avm/ptn/authorization/policy-exemption:<versio
 using 'br/public:avm/ptn/authorization/policy-exemption:<version>'
 
 // Required parameters
+param exemptionCategory = 'Mitigated'
+param name = 'apergmin001'
+param policyAssignmentId = '<policyAssignmentId>'
 // Non-required parameters
-param name = 'apargmin001'
-param location = '<location>'
-param metadata = {
-  assignedBy: 'Bicep'
-}
-param policyDefinitionId = '/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d'
 param resourceGroupName = '<resourceGroupName>'
 param subscriptionId = '<subscriptionId>'
 ```
@@ -470,7 +353,10 @@ param subscriptionId = '<subscriptionId>'
 </details>
 <p>
 
-### Example 4: _Rg.Max_
+### Example 4: _Policy Exemption (Resource Group)_
+
+This module deploys a Policy Exemption at a Resource Group scope using common parameters.
+
 
 <details>
 
@@ -481,50 +367,20 @@ module policyExemption 'br/public:avm/ptn/authorization/policy-exemption:<versio
   name: 'policyExemptionDeployment'
   params: {
     // Required parameters
+    exemptionCategory: 'Mitigated'
+    name: 'apergmax001'
+    policyAssignmentId: '<policyAssignmentId>'
     // Non-required parameters
-    name: 'apargmax001'
-    description: '[Description] Policy Assignment at the resource group scope'
-    displayName: '[Display Name] Policy Assignment at the resource group scope'
-    enforcementMode: 'DoNotEnforce'
-    identity: 'UserAssigned'
+    assignmentScopeValidation: 'Default'
+    description: '[Description] Policy Exemption at the management group scope'
+    displayName: '[DisplayName] Policy Exemption at the management group scope'
+    enableTelemetry: true
+    expiresOn: '2024-11-14T20:46:13Z'
     location: '<location>'
     metadata: {
       assignedBy: 'Bicep'
       category: 'Security'
-      version: '1.0'
     }
-    nonComplianceMessages: [
-      {
-        message: 'Violated Policy Assignment - This is a Non Compliance Message'
-      }
-    ]
-    notScopes: [
-      '<keyVaultResourceId>'
-    ]
-    overrides: [
-      {
-        kind: 'policyEffect'
-        selectors: [
-          {
-            in: [
-              'ASC_DeployAzureDefenderForSqlAdvancedThreatProtectionWindowsAgent'
-              'ASC_DeployAzureDefenderForSqlVulnerabilityAssessmentWindowsAgent'
-            ]
-            kind: 'policyDefinitionReferenceId'
-          }
-        ]
-        value: 'Disabled'
-      }
-    ]
-    parameters: {
-      effect: {
-        value: 'Disabled'
-      }
-      enableCollectionOfSqlQueriesForSecurityResearch: {
-        value: false
-      }
-    }
-    policyDefinitionId: '/providers/Microsoft.Authorization/policySetDefinitions/39a366e6-fdde-4f41-bbf8-3757f46d1611'
     resourceGroupName: '<resourceGroupName>'
     resourceSelectors: [
       {
@@ -545,11 +401,7 @@ module policyExemption 'br/public:avm/ptn/authorization/policy-exemption:<versio
         ]
       }
     ]
-    roleDefinitionIds: [
-      '/providers/microsoft.authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c'
-    ]
     subscriptionId: '<subscriptionId>'
-    userAssignedIdentityId: '<userAssignedIdentityId>'
   }
 }
 ```
@@ -567,21 +419,30 @@ module policyExemption 'br/public:avm/ptn/authorization/policy-exemption:<versio
   "contentVersion": "1.0.0.0",
   "parameters": {
     // Required parameters
+    "exemptionCategory": {
+      "value": "Mitigated"
+    },
     "name": {
-      "value": "apargmax001"
+      "value": "apergmax001"
+    },
+    "policyAssignmentId": {
+      "value": "<policyAssignmentId>"
     },
     // Non-required parameters
+    "assignmentScopeValidation": {
+      "value": "Default"
+    },
     "description": {
-      "value": "[Description] Policy Assignment at the resource group scope"
+      "value": "[Description] Policy Exemption at the management group scope"
     },
     "displayName": {
-      "value": "[Display Name] Policy Assignment at the resource group scope"
+      "value": "[DisplayName] Policy Exemption at the management group scope"
     },
-    "enforcementMode": {
-      "value": "DoNotEnforce"
+    "enableTelemetry": {
+      "value": true
     },
-    "identity": {
-      "value": "UserAssigned"
+    "expiresOn": {
+      "value": "2024-11-14T20:46:13Z"
     },
     "location": {
       "value": "<location>"
@@ -589,51 +450,8 @@ module policyExemption 'br/public:avm/ptn/authorization/policy-exemption:<versio
     "metadata": {
       "value": {
         "assignedBy": "Bicep",
-        "category": "Security",
-        "version": "1.0"
+        "category": "Security"
       }
-    },
-    "nonComplianceMessages": {
-      "value": [
-        {
-          "message": "Violated Policy Assignment - This is a Non Compliance Message"
-        }
-      ]
-    },
-    "notScopes": {
-      "value": [
-        "<keyVaultResourceId>"
-      ]
-    },
-    "overrides": {
-      "value": [
-        {
-          "kind": "policyEffect",
-          "selectors": [
-            {
-              "in": [
-                "ASC_DeployAzureDefenderForSqlAdvancedThreatProtectionWindowsAgent",
-                "ASC_DeployAzureDefenderForSqlVulnerabilityAssessmentWindowsAgent"
-              ],
-              "kind": "policyDefinitionReferenceId"
-            }
-          ],
-          "value": "Disabled"
-        }
-      ]
-    },
-    "parameters": {
-      "value": {
-        "effect": {
-          "value": "Disabled"
-        },
-        "enableCollectionOfSqlQueriesForSecurityResearch": {
-          "value": false
-        }
-      }
-    },
-    "policyDefinitionId": {
-      "value": "/providers/Microsoft.Authorization/policySetDefinitions/39a366e6-fdde-4f41-bbf8-3757f46d1611"
     },
     "resourceGroupName": {
       "value": "<resourceGroupName>"
@@ -659,16 +477,8 @@ module policyExemption 'br/public:avm/ptn/authorization/policy-exemption:<versio
         }
       ]
     },
-    "roleDefinitionIds": {
-      "value": [
-        "/providers/microsoft.authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
-      ]
-    },
     "subscriptionId": {
       "value": "<subscriptionId>"
-    },
-    "userAssignedIdentityId": {
-      "value": "<userAssignedIdentityId>"
     }
   }
 }
@@ -685,50 +495,20 @@ module policyExemption 'br/public:avm/ptn/authorization/policy-exemption:<versio
 using 'br/public:avm/ptn/authorization/policy-exemption:<version>'
 
 // Required parameters
+param exemptionCategory = 'Mitigated'
+param name = 'apergmax001'
+param policyAssignmentId = '<policyAssignmentId>'
 // Non-required parameters
-param name = 'apargmax001'
-param description = '[Description] Policy Assignment at the resource group scope'
-param displayName = '[Display Name] Policy Assignment at the resource group scope'
-param enforcementMode = 'DoNotEnforce'
-param identity = 'UserAssigned'
+param assignmentScopeValidation = 'Default'
+param description = '[Description] Policy Exemption at the management group scope'
+param displayName = '[DisplayName] Policy Exemption at the management group scope'
+param enableTelemetry = true
+param expiresOn = '2024-11-14T20:46:13Z'
 param location = '<location>'
 param metadata = {
   assignedBy: 'Bicep'
   category: 'Security'
-  version: '1.0'
 }
-param nonComplianceMessages = [
-  {
-    message: 'Violated Policy Assignment - This is a Non Compliance Message'
-  }
-]
-param notScopes = [
-  '<keyVaultResourceId>'
-]
-param overrides = [
-  {
-    kind: 'policyEffect'
-    selectors: [
-      {
-        in: [
-          'ASC_DeployAzureDefenderForSqlAdvancedThreatProtectionWindowsAgent'
-          'ASC_DeployAzureDefenderForSqlVulnerabilityAssessmentWindowsAgent'
-        ]
-        kind: 'policyDefinitionReferenceId'
-      }
-    ]
-    value: 'Disabled'
-  }
-]
-param parameters = {
-  effect: {
-    value: 'Disabled'
-  }
-  enableCollectionOfSqlQueriesForSecurityResearch: {
-    value: false
-  }
-}
-param policyDefinitionId = '/providers/Microsoft.Authorization/policySetDefinitions/39a366e6-fdde-4f41-bbf8-3757f46d1611'
 param resourceGroupName = '<resourceGroupName>'
 param resourceSelectors = [
   {
@@ -749,17 +529,16 @@ param resourceSelectors = [
     ]
   }
 ]
-param roleDefinitionIds = [
-  '/providers/microsoft.authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c'
-]
 param subscriptionId = '<subscriptionId>'
-param userAssignedIdentityId = '<userAssignedIdentityId>'
 ```
 
 </details>
 <p>
 
-### Example 5: _Sub.Defaults_
+### Example 5: _Policy Exemption (Subscription)_
+
+This module deploys a Policy Exemption at a Subscription scope using minimal parameters.
+
 
 <details>
 
@@ -770,14 +549,10 @@ module policyExemption 'br/public:avm/ptn/authorization/policy-exemption:<versio
   name: 'policyExemptionDeployment'
   params: {
     // Required parameters
-    name: 'apasubmin001'
-    location: '<location>'
-    metadata: {
-      assignedBy: 'Bicep'
-      category: 'Security'
-      version: '1.0'
-    }
-    policyDefinitionId: '/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d'
+    exemptionCategory: 'Mitigated'
+    name: 'apesubmin001'
+    policyAssignmentId: '<policyAssignmentId>'
+    // Non-required parameters
     subscriptionId: '<subscriptionId>'
   }
 }
@@ -796,22 +571,16 @@ module policyExemption 'br/public:avm/ptn/authorization/policy-exemption:<versio
   "contentVersion": "1.0.0.0",
   "parameters": {
     // Required parameters
+    "exemptionCategory": {
+      "value": "Mitigated"
+    },
     "name": {
-      "value": "apasubmin001"
+      "value": "apesubmin001"
     },
-    "location": {
-      "value": "<location>"
+    "policyAssignmentId": {
+      "value": "<policyAssignmentId>"
     },
-    "metadata": {
-      "value": {
-        "assignedBy": "Bicep",
-        "category": "Security",
-        "version": "1.0"
-      }
-    },
-    "policyDefinitionId": {
-      "value": "/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d"
-    },
+    // Non-required parameters
     "subscriptionId": {
       "value": "<subscriptionId>"
     }
@@ -830,21 +599,20 @@ module policyExemption 'br/public:avm/ptn/authorization/policy-exemption:<versio
 using 'br/public:avm/ptn/authorization/policy-exemption:<version>'
 
 // Required parameters
-param name = 'apasubmin001'
-param location = '<location>'
-param metadata = {
-  assignedBy: 'Bicep'
-  category: 'Security'
-  version: '1.0'
-}
-param policyDefinitionId = '/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d'
+param exemptionCategory = 'Mitigated'
+param name = 'apesubmin001'
+param policyAssignmentId = '<policyAssignmentId>'
+// Non-required parameters
 param subscriptionId = '<subscriptionId>'
 ```
 
 </details>
 <p>
 
-### Example 6: _Sub.Max_
+### Example 6: _Policy Exemption (Subscription)_
+
+This module deploys a Policy Exemption at a Subscription scope using common parameters.
+
 
 <details>
 
@@ -855,50 +623,20 @@ module policyExemption 'br/public:avm/ptn/authorization/policy-exemption:<versio
   name: 'policyExemptionDeployment'
   params: {
     // Required parameters
+    exemptionCategory: 'Mitigated'
+    name: 'apesubmax001'
+    policyAssignmentId: '<policyAssignmentId>'
     // Non-required parameters
-    name: 'apasubmax001'
-    description: '[Description] Policy Assignment at the subscription scope'
-    displayName: '[Display Name] Policy Assignment at the subscription scope'
-    enforcementMode: 'DoNotEnforce'
-    identity: 'UserAssigned'
+    assignmentScopeValidation: 'Default'
+    description: '[Description] Policy Exemption at the management group scope'
+    displayName: '[DisplayName] Policy Exemption at the management group scope'
+    enableTelemetry: true
+    expiresOn: '2024-11-14T20:46:13Z'
     location: '<location>'
     metadata: {
       assignedBy: 'Bicep'
       category: 'Security'
-      version: '1.0'
     }
-    nonComplianceMessages: [
-      {
-        message: 'Violated Policy Assignment - This is a Non Compliance Message'
-      }
-    ]
-    notScopes: [
-      '/subscriptions/<value>/resourceGroups/validation-rg'
-    ]
-    overrides: [
-      {
-        kind: 'policyEffect'
-        selectors: [
-          {
-            in: [
-              'ASC_DeployAzureDefenderForSqlAdvancedThreatProtectionWindowsAgent'
-              'ASC_DeployAzureDefenderForSqlVulnerabilityAssessmentWindowsAgent'
-            ]
-            kind: 'policyDefinitionReferenceId'
-          }
-        ]
-        value: 'Disabled'
-      }
-    ]
-    parameters: {
-      effect: {
-        value: 'Disabled'
-      }
-      enableCollectionOfSqlQueriesForSecurityResearch: {
-        value: false
-      }
-    }
-    policyDefinitionId: '/providers/Microsoft.Authorization/policySetDefinitions/39a366e6-fdde-4f41-bbf8-3757f46d1611'
     resourceSelectors: [
       {
         name: 'resourceSelector-test'
@@ -918,11 +656,7 @@ module policyExemption 'br/public:avm/ptn/authorization/policy-exemption:<versio
         ]
       }
     ]
-    roleDefinitionIds: [
-      '/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c'
-    ]
     subscriptionId: '<subscriptionId>'
-    userAssignedIdentityId: '<userAssignedIdentityId>'
   }
 }
 ```
@@ -940,21 +674,30 @@ module policyExemption 'br/public:avm/ptn/authorization/policy-exemption:<versio
   "contentVersion": "1.0.0.0",
   "parameters": {
     // Required parameters
+    "exemptionCategory": {
+      "value": "Mitigated"
+    },
     "name": {
-      "value": "apasubmax001"
+      "value": "apesubmax001"
+    },
+    "policyAssignmentId": {
+      "value": "<policyAssignmentId>"
     },
     // Non-required parameters
+    "assignmentScopeValidation": {
+      "value": "Default"
+    },
     "description": {
-      "value": "[Description] Policy Assignment at the subscription scope"
+      "value": "[Description] Policy Exemption at the management group scope"
     },
     "displayName": {
-      "value": "[Display Name] Policy Assignment at the subscription scope"
+      "value": "[DisplayName] Policy Exemption at the management group scope"
     },
-    "enforcementMode": {
-      "value": "DoNotEnforce"
+    "enableTelemetry": {
+      "value": true
     },
-    "identity": {
-      "value": "UserAssigned"
+    "expiresOn": {
+      "value": "2024-11-14T20:46:13Z"
     },
     "location": {
       "value": "<location>"
@@ -962,51 +705,8 @@ module policyExemption 'br/public:avm/ptn/authorization/policy-exemption:<versio
     "metadata": {
       "value": {
         "assignedBy": "Bicep",
-        "category": "Security",
-        "version": "1.0"
+        "category": "Security"
       }
-    },
-    "nonComplianceMessages": {
-      "value": [
-        {
-          "message": "Violated Policy Assignment - This is a Non Compliance Message"
-        }
-      ]
-    },
-    "notScopes": {
-      "value": [
-        "/subscriptions/<value>/resourceGroups/validation-rg"
-      ]
-    },
-    "overrides": {
-      "value": [
-        {
-          "kind": "policyEffect",
-          "selectors": [
-            {
-              "in": [
-                "ASC_DeployAzureDefenderForSqlAdvancedThreatProtectionWindowsAgent",
-                "ASC_DeployAzureDefenderForSqlVulnerabilityAssessmentWindowsAgent"
-              ],
-              "kind": "policyDefinitionReferenceId"
-            }
-          ],
-          "value": "Disabled"
-        }
-      ]
-    },
-    "parameters": {
-      "value": {
-        "effect": {
-          "value": "Disabled"
-        },
-        "enableCollectionOfSqlQueriesForSecurityResearch": {
-          "value": false
-        }
-      }
-    },
-    "policyDefinitionId": {
-      "value": "/providers/Microsoft.Authorization/policySetDefinitions/39a366e6-fdde-4f41-bbf8-3757f46d1611"
     },
     "resourceSelectors": {
       "value": [
@@ -1029,16 +729,8 @@ module policyExemption 'br/public:avm/ptn/authorization/policy-exemption:<versio
         }
       ]
     },
-    "roleDefinitionIds": {
-      "value": [
-        "/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
-      ]
-    },
     "subscriptionId": {
       "value": "<subscriptionId>"
-    },
-    "userAssignedIdentityId": {
-      "value": "<userAssignedIdentityId>"
     }
   }
 }
@@ -1055,50 +747,20 @@ module policyExemption 'br/public:avm/ptn/authorization/policy-exemption:<versio
 using 'br/public:avm/ptn/authorization/policy-exemption:<version>'
 
 // Required parameters
+param exemptionCategory = 'Mitigated'
+param name = 'apesubmax001'
+param policyAssignmentId = '<policyAssignmentId>'
 // Non-required parameters
-param name = 'apasubmax001'
-param description = '[Description] Policy Assignment at the subscription scope'
-param displayName = '[Display Name] Policy Assignment at the subscription scope'
-param enforcementMode = 'DoNotEnforce'
-param identity = 'UserAssigned'
+param assignmentScopeValidation = 'Default'
+param description = '[Description] Policy Exemption at the management group scope'
+param displayName = '[DisplayName] Policy Exemption at the management group scope'
+param enableTelemetry = true
+param expiresOn = '2024-11-14T20:46:13Z'
 param location = '<location>'
 param metadata = {
   assignedBy: 'Bicep'
   category: 'Security'
-  version: '1.0'
 }
-param nonComplianceMessages = [
-  {
-    message: 'Violated Policy Assignment - This is a Non Compliance Message'
-  }
-]
-param notScopes = [
-  '/subscriptions/<value>/resourceGroups/validation-rg'
-]
-param overrides = [
-  {
-    kind: 'policyEffect'
-    selectors: [
-      {
-        in: [
-          'ASC_DeployAzureDefenderForSqlAdvancedThreatProtectionWindowsAgent'
-          'ASC_DeployAzureDefenderForSqlVulnerabilityAssessmentWindowsAgent'
-        ]
-        kind: 'policyDefinitionReferenceId'
-      }
-    ]
-    value: 'Disabled'
-  }
-]
-param parameters = {
-  effect: {
-    value: 'Disabled'
-  }
-  enableCollectionOfSqlQueriesForSecurityResearch: {
-    value: false
-  }
-}
-param policyDefinitionId = '/providers/Microsoft.Authorization/policySetDefinitions/39a366e6-fdde-4f41-bbf8-3757f46d1611'
 param resourceSelectors = [
   {
     name: 'resourceSelector-test'
@@ -1118,11 +780,7 @@ param resourceSelectors = [
     ]
   }
 ]
-param roleDefinitionIds = [
-  '/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c'
-]
 param subscriptionId = '<subscriptionId>'
-param userAssignedIdentityId = '<userAssignedIdentityId>'
 ```
 
 </details>
@@ -1187,8 +845,9 @@ Specifies the ID of the policy assignment that is being exempted.
 
 The option to validate whether the exemption is at or under the assignment scope.
 
-- Required: Yes
+- Required: No
 - Type: string
+- Default: `'Default'`
 - Allowed:
   ```Bicep
   [
@@ -1225,7 +884,7 @@ Enable/Disable usage telemetry for module.
 
 The expiration date and time (in UTC ISO 8601 format yyyy-MM-ddTHH:mm:ssZ) of the policy exemption.
 
-- Required: Yes
+- Required: No
 - Type: string
 
 ### Parameter: `location`
